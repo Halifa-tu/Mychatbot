@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Guardian Chatbot | Welcome</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'accent-blue': '#1e40ff',
+            'accent-coral': '#EF4444',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    .typing {
+      border-right: 3px solid currentColor;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% {
+        border-color: transparent;
+      }
+      25%, 75% {
+        border-color: currentColor;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-gray-50 to-white flex flex-col items-center justify-center h-screen text-center text-gray-800 dark:from-gray-900 dark:to-gray-950 dark:text-gray-100 transition duration-500">
+
+  <!-- Dark/Light Mode Toggle -->
+  <button id="theme-toggle" class="absolute top-6 right-6 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-3 py-2 rounded-full shadow-md text-sm font-medium transition duration-300">
+    🌙 Dark Mode
+  </button>
+
+  <!-- Title -->
+  <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 text-accent-coral dark:text-accent-blue">
+    💬 HALI-TECH's IT SUPPORT <br>
+    AND 
+    <br> CYBERSECURITY GUARDIAN
+  </h1>
+
+  <!-- Typing Effect Line -->
+  <p id="typing-text" class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-md mb-10 typing"></p>
+
+  <!-- Start Chat Button -->
+  <a href="chatbot.html"
+     class="px-8 py-3 bg-accent-coral text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 transition duration-300 dark:bg-accent-blue dark:hover:bg-blue-700">
+     PLEASE START CHATTING 
+  </a>
+
+  <!-- Footer -->
+  <footer class="absolute bottom-6 text-gray-400 text-sm dark:text-gray-500">
+    © 2025 Halifatu Farr Yakubu | Cybersecurity & IT Support
+  </footer>
+
+  <!-- JavaScript for Typing Animation & Theme Toggle -->
+  <script>
+    // Typing effect text
+    const text = "Helping you stay informed and digitally safe...";
+    const typingElement = document.getElementById("typing-text");
+    let index = 0;
+
+    function type() {
+      if (index < text.length) {
+        typingElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, 70);
+      } else {
+        setTimeout(() => {
+          typingElement.textContent = "";
+          index = 0;
+          type();
+        }, 2500);
+      }
+    }
+    type();
+
+    // Theme toggle logic
+    const toggleBtn = document.getElementById("theme-toggle");
+    const userPref = localStorage.getItem("theme");
+
+    if (userPref === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.textContent = "☀️ Light Mode";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle("dark");
+
+      toggleBtn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  </script>
+</body>
+</html>
