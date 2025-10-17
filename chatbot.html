@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> HALI-TECH IT Support Chatbot</title>
+  <title>HALI-TECH IT Support Chatbot</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
           colors: {
             "primary-bg": "#f7f9fa",
             "secondary-bg": "#ffffff",
-            "accent-blue": "#1e40ff",
+            "accent-blue": "#2563eb",
             "user-bubble": "#dbf4ff",
             "ai-bubble": "#e5e7eb",
           },
@@ -28,13 +28,7 @@
     html, body {
       height: 100%;
       margin: 0;
-      overflow: hidden;
-    }
-    #chat-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      background-color: var(--primary-bg);
+      background-color: #f7f9fa;
     }
     #message-area {
       flex-grow: 1;
@@ -43,14 +37,13 @@
       scroll-behavior: smooth;
     }
     #input-area {
-      padding: 1rem;
-      border-top: 1px solid #e0e0e0;
-      background-color: var(--secondary-bg);
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      background-color: white;
+      padding: 0.75rem 1rem;
+      border-top: 1px solid #e5e7eb;
+      position: sticky;
+      bottom: 0;
     }
-    .ai-message p {
-      margin-bottom: 0.5rem;
-    }
+    .ai-message p { margin-bottom: 0.5rem; }
     .ai-message code {
       background-color: #e5e7eb;
       padding: 2px 4px;
@@ -59,52 +52,49 @@
   </style>
 </head>
 
-<body>
-  <div id="chat-container" class="max-w-xl mx-auto">
+<body class="flex justify-center items-center min-h-screen bg-primary-bg">
+  <div id="chat-container" class="flex flex-col w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-lg rounded-2xl overflow-hidden h-[100vh] sm:h-[90vh]">
+
     <!-- Header -->
-    <div class="p-4 bg-accent-blue text-white shadow-lg flex items-center  rounded-b-xl">
-      <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg">
+    <header class="bg-gradient-to-r from-accent-blue to-blue-500 text-white p-4 flex items-center justify-center shadow-md">
+      <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M9 12l2 2 4-4m5.618-4.018A12.001 12.001 0 0012 3c-2.355 0-4.63.766-6.556 2.182l-3.344 3.344a.5.5 0 00-.14.354v7.419c0 .2.16.36.36.36h19.28c.2 0 .36-.16.36-.36v-7.419a.5.5 0 00-.14-.354l-3.344-3.344z" />
       </svg>
-      <h1 class="text-xl font-bold"> <center-text>   HALI-TECH IT Support Chatbot     </center-text></h1>
-    </div>
+      <h1 class="text-lg font-semibold text-center">HALI-TECH IT Support Chatbot</h1>
+    </header>
 
     <!-- Messages -->
-    <div id="message-area">
-      <div class="flex justify-start mb-4">
+    <main id="message-area" class="bg-primary-bg flex-1 overflow-y-auto space-y-4">
+      <div class="flex justify-start">
         <div class="ai-message max-w-[80%] p-3 rounded-xl rounded-tl-none shadow bg-ai-bubble text-gray-800">
           <p class="font-semibold">Hello! I'm your IT Guardian Assistant.</p>
           <p class="text-sm">
-            I can provide quick advice on common <b>security issues</b> (like phishing and malware)
-            and assist with <b>basic help desk support</b> (like troubleshooting or password resets).
-            How can I help you today?
+            I can help you with <b>security issues</b> (like phishing, malware) and <b>help desk support</b> (like troubleshooting or password resets).  
+            How can I assist you today?
           </p>
         </div>
       </div>
-    </div>
+    </main>
 
     <!-- Input -->
-    <div id="input-area">
-      <form id="chat-form" class="flex space-x-3">
+    <footer id="input-area">
+      <form id="chat-form" class="flex items-center space-x-2">
         <input type="text" id="user-input"
-          placeholder="Ask about a security risk or IT problem..." required
-          class="flex-grow p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent-blue transition duration-200" />
+          placeholder="Type your question here..."
+          class="flex-grow p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent-blue transition duration-200 text-sm" required />
+
         <button type="submit" id="send-button" disabled
-          class="p-3 bg-gray-400 text-white rounded-full transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-          <svg class="w-6 h-6 transform rotate-45 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
+          class="p-3 bg-gray-400 text-white rounded-full transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105">
+          <svg class="w-5 h-5 transform rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
           </svg>
         </button>
       </form>
-      <div id="loading-indicator" class="hidden text-center text-sm text-gray-500 mt-2">
-        Thinking...
-      </div>
-      <div id="error-message" class="hidden text-center text-sm text-red-600 mt-2"></div>
-    </div>
+      <div id="loading-indicator" class="hidden text-center text-sm text-gray-500 mt-1">Thinking...</div>
+      <div id="error-message" class="hidden text-center text-sm text-red-600 mt-1"></div>
+    </footer>
   </div>
 
   <!-- Chat Logic -->
@@ -116,32 +106,33 @@
     const loadingIndicator = document.getElementById("loading-indicator");
     const errorMessage = document.getElementById("error-message");
 
-    const apiKey = "AIzaSyC6TYdda_6cDmfVLcbx9_Y6veB5N-a3sWg";
+    const apiKey = "AIzaSyC6TYdda_6cDmfVLcbx9_Y6veB5N-a3sWg"; // Replace with valid key
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
     let chatHistory = [];
 
-    const systemInstruction = `You are a professional, concise, and helpful IT Security and Help Desk Assistant.
-1. For **Cybersecurity Issues**, identify and give step-by-step fixes (e.g., phishing, malware, weak passwords).
-2. For **Help Desk Support**, give practical troubleshooting steps (e.g., software setup, password reset).
-Format answers clearly using bullet points or numbers. Avoid long paragraphs.`;
+    const systemInstruction = `You are a professional, concise IT Security and Help Desk Assistant.
+1. For cybersecurity issues, provide step-by-step solutions.
+2. For IT help desk support, guide with troubleshooting steps.
+Use clear formatting and short, readable answers.`;
 
     userInput.addEventListener("input", () => {
-      sendButton.disabled = userInput.value.trim() === "";
-      sendButton.classList.toggle("bg-accent-blue", userInput.value.trim() !== "");
-      sendButton.classList.toggle("bg-gray-400", userInput.value.trim() === "");
+      const active = userInput.value.trim() !== "";
+      sendButton.disabled = !active;
+      sendButton.classList.toggle("bg-accent-blue", active);
+      sendButton.classList.toggle("bg-gray-400", !active);
     });
 
     function displayMessage(text, sender) {
       const wrapper = document.createElement("div");
-      wrapper.className = `flex mb-4 ${sender === "user" ? "justify-end" : "justify-start"}`;
+      wrapper.className = `flex mb-3 ${sender === "user" ? "justify-end" : "justify-start"}`;
       const bubble = document.createElement("div");
-      bubble.className = `max-w-[80%] p-3 rounded-xl shadow ${sender === "user"
-          ? "bg-user-bubble text-dark-text"
-          : "bg-ai-bubble text-gray-800 ai-message"
-        }`;
+      bubble.className = `max-w-[80%] p-3 rounded-xl shadow text-sm ${sender === "user"
+        ? "bg-user-bubble text-gray-900 rounded-br-none"
+        : "bg-ai-bubble text-gray-800 ai-message rounded-tl-none"
+      }`;
 
-      let html = text
+      const html = text
         .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
         .replace(/`(.*?)`/g, "<code>$1</code>")
         .replace(/\n{2,}/g, "</p><p>")
@@ -162,7 +153,6 @@ Format answers clearly using bullet points or numbers. Avoid long paragraphs.`;
 
       displayMessage(prompt, "user");
       chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
       userInput.value = "";
       sendButton.disabled = true;
       loadingIndicator.classList.remove("hidden");
@@ -173,22 +163,18 @@ Format answers clearly using bullet points or numbers. Avoid long paragraphs.`;
           contents: chatHistory,
           systemInstruction: { parts: [{ text: systemInstruction }] },
         };
-
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-
         const result = await response.json();
-        const aiText =
-          result.candidates?.[0]?.content?.parts?.[0]?.text ||
+        const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text ||
           "Sorry, I couldn’t process that request right now.";
-
         displayMessage(aiText, "ai");
         chatHistory.push({ role: "model", parts: [{ text: aiText }] });
       } catch (err) {
-        console.error("Gemini API Error:", err);
+        console.error("Error:", err);
         errorMessage.textContent = "⚠️ Error: Could not connect to the AI Assistant.";
         errorMessage.classList.remove("hidden");
       } finally {
